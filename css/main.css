@@ -89,5 +89,5 @@ main {
     --fg: hsla(209, 89%, 50%, 1);
 }
 ::selection {
-    background: #EDF3FAaa;
+    background: rgba(138, 150, 165, 0.1);
 }
