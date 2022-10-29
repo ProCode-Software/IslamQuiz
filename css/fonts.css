@@ -1,15 +1,18 @@
 @font-face {
+    font-display: swap;
     font-family: Gotham;
     font-weight: 400;
-    src: url(../assets/fonts/GothamSSm-Book.otf);
+    src: url(../assets/fonts/GothamSSm-Book_Web.woff2);
 }
 @font-face {
+    font-display: swap;
     font-family: Gotham;
     font-weight: 600;
-    src: url(../assets/fonts/GothamSSm-Medium.otf);
+    src: url(../assets/fonts/GothamSSm-Medium_Web.woff2);
 }
 @font-face {
+    font-display: swap;
     font-family: Gotham;
     font-weight: 700;
-    src: url(../assets/fonts/GothamSSm-Bold.otf);
+    src: url(../assets/fonts/GothamSSm-Bold_Web.woff2);
 }
