@@ -233,6 +233,34 @@ button.primary:hover {
     box-shadow: none;
     transition: .2s;
 }
+.answer.correct {
+    background: #00f966;
+    color: #fff;
+    box-shadow: 0px 8px 20px rgba(136, 159, 174, 0.14);
+    font-weight: 600;
+    transition: .2s;
+    border-color: #00f966 !important;
+}
+
+.answer.correct .keyboardShortcut {
+    --color: #00f966 !important;
+    box-shadow: none;
+    transition: .2s;
+}
+.answer.incorrect {
+    background: #ff005c;
+    color: #fff;
+    box-shadow: 0px 8px 20px rgba(136, 159, 174, 0.14);
+    font-weight: 600;
+    transition: .2s;
+    border-color: #ff005c !important;
+}
+
+.answer.incorrect .keyboardShortcut {
+    --color: #ff005c !important;
+    box-shadow: none;
+    transition: .2s;
+}
 
 .onboarding {
     width: 100%;
@@ -310,4 +338,23 @@ input:focus {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
+}
+
+button.disabled {
+    background: #f9faff;
+    color: #acadba;
+    pointer-events: none;
+    transition: .15s;
+}
+.answer .right {
+    display: flex;
+}
+.answer .right svg {
+    display: flex;
+    width: 28px;
+    height: 28px;
+}
+.answer:not(.incorrect):hover, .answer:not(.correct):hover {
+    transition: .2s;
+    border: solid 4px var(--accent);
 }
