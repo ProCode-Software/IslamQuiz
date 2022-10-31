@@ -51,9 +51,9 @@ function showQuestion(questionNumber) {
     submitBtn.textContent = 'Submit'
 
     answersFrame.innerHTML = ''
+    let letters = 'ABCDEF'.split('')
     switch (question.type) {
         case 'multipleChoice':
-            let letters = 'ABCDEF'.split('')
             for (let i = 0; i < question.answers.length; i++) {
                 const answer = question.answers[i]
                 const answerEl = `<div class="answer" data-answer="${i}">
@@ -79,25 +79,65 @@ function showQuestion(questionNumber) {
             }
 
             break;
+        case 'trueFalse':
+            for (let i = 0; i < 2; i++) {
+                const answerEl = `<div class="answer" data-answer="${i}">
+                        <div class="left">
+                            <div class="keyboardShortcut" data-key="${letters[i].toLowerCase()}">${letters[i].toUpperCase()}</div>
+                            <div class="answer-text">${i == 0 ? 'True' : 'False'}</div>
+                        </div>
+                        <div class="right"></div>
+                    </div>`
+                answersFrame.innerHTML = answersFrame.innerHTML + answerEl
+            };
+            for (let element of answersFrame.children) {
+                element.addEventListener('click', () => {
+                    const target = element
+                    if (answersFrame.querySelector(`.answer.selected`)) {
+                        answersFrame.querySelector(`.answer.selected`).classList.remove('selected')
+                    }
+                    target.classList.add('selected')
+                    playerAnswer = (target.getAttribute('data-answer') == '0' ? true : false)
+                    submitBtn.classList.remove('disabled')
+                    console.log(playerAnswer);
+                })
+            }
 
+            break;
         default:
             throw console.error('Invalid question type');
             break;
     }
 
-    submitBtn.addEventListener('click', () => checkAnswer(currentQuestion, playerAnswer))
+    submitBtn.addEventListener('click', () => checkAnswer(playerAnswer))
 }
-function checkAnswer(questionNumber, answer) {
-    const question = questions[questionNumber]
+function checkAnswer(answer) {
+    const question = questions[currentQuestion]
+    console.log(question);
+    console.log('cq = ' + currentQuestion);
     const scoreText = document.querySelector("header .scoreText");
     const submitBtn = document.querySelector('.main-content .submitArea .submitBtn')
     const answersFrame = document.querySelector('.main-content .answersArea')
     let gettingPoints = true;
 
+    let playerAnswerEl;
+
+    switch (question.type) {
+        case 'multipleChoice':
+            playerAnswerEl = answersFrame.querySelectorAll('.answer')[answer]
+            break;
+        case 'trueFalse':
+            playerAnswerEl = answersFrame.querySelectorAll('.answer')[answer == true ? 0 : 1]
+            break;
+        default:
+            playerAnswerEl = answersFrame.querySelectorAll('.answer')[answer]
+            break;
+    }
+
     if (question.correct == answer) {
         console.log('correct');
-        answersFrame.querySelectorAll('.answer')[answer].classList.add('correct')
-        answersFrame.querySelectorAll('.answer')[answer].querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        playerAnswerEl.classList.add('correct')
+        playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M21.5 6.62L9.73566 18.3843L3 11.6487" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
 </svg>
 `
@@ -106,8 +146,8 @@ function checkAnswer(questionNumber, answer) {
         }
         scoreText.innerHTML = score
     } else {
-        answersFrame.querySelectorAll('.answer')[answer].classList.add('incorrect')
-        answersFrame.querySelectorAll('.answer')[answer].querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        playerAnswerEl.classList.add('incorrect')
+        playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M5.38128 17.3812L4.76256 17.9999L6 19.2374L6.61872 18.6186L5.38128 17.3812ZM18.6187 6.61872L19.2374 6.00001L18 4.76256L17.3813 5.38128L18.6187 6.61872ZM6.61872 5.38128L6 4.76256L4.76256 6L5.38128 6.61872L6.61872 5.38128ZM17.3813 18.6186L18 19.2374L19.2374 17.9999L18.6187 17.3812L17.3813 18.6186ZM6.61872 18.6186L12.6187 12.6187L11.3812 11.3812L5.38128 17.3812L6.61872 18.6186ZM12.6187 12.6187L18.6187 6.61872L17.3813 5.38128L11.3812 11.3812L12.6187 12.6187ZM5.38128 6.61872L11.3812 12.6187L12.6187 11.3812L6.61872 5.38128L5.38128 6.61872ZM11.3812 12.6187L17.3813 18.6186L18.6187 17.3812L12.6187 11.3812L11.3812 12.6187Z" fill="currentColor"/>
 </svg>
 `

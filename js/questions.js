@@ -1,18 +1,17 @@
 const questions = [
     {
-        question: 'What is 10 plus 10?',
-        type: 'multipleChoice',
-        answers: [2, 20, 53, 7],
-        correct: 1,
-        notes: 'Add 10 with 10 and get 20. It is that simple.',
-        points: 20
+        question: 'Muslims believe in the Trinity',
+        type: 'trueFalse',
+        notes: 'The Qur\'an says that if you believe or mention the Trinity, you will undergo the suffering of hell.',
+        points: 20,
+        correct: false
     },
     {
-        question: 'Who is the 1-year-old baby in the family?',
+        question: 'Muslims believe that Christians are _________ because they believe that their God is in 3 persons.',
         type: 'multipleChoice',
-        answers: ['Joan', 'Lisa', 'Evan', 'Selasie Jr.'],
-        correct: 0,
-        notes: 'Yeah, you should know',
-        points: 100
-    }
+        answers: ['atheists', 'polytheists', 'monotheists', 'pantheists'],
+        notes: 'Add 10 with 10 and get 20. It is that simple.',
+        points: 20,
+        correct: 1
+    },
 ]
