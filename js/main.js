@@ -160,6 +160,7 @@ function showQuestion(questionNumber) {
                     activeBlank = letters.indexOf(element.id.replace('blank', ''))
 
                     element.onkeyup = () => {
+                        element.textContent = element.textContent.toLowerCase()
                         checkForBlanks()
                         checkForUses()
                     }
@@ -220,19 +221,18 @@ function showQuestion(questionNumber) {
             function checkForUses() {
                 let sortedAnswers = question.answers.sort()
 
-                for (let i = 0; i < sortedAnswers.length; i++) {
-                    let item = sortedAnswers[i]
+                bankGroup.querySelectorAll('.bankItem').forEach(s => {
+                    if (s.classList.contains('used')){
+                        s.classList.remove('used')
+                    }
+                })
 
-                    paragraph.querySelectorAll('.blank').forEach(el => {
-                        if (el.textContent == item) {
-                            bankGroup.querySelectorAll('.bankItem')[i].classList.add('used')
-                        } else {
-                            if (bankGroup.querySelectorAll('.bankItem')[i].classList.contains('used')) {
-                                bankGroup.querySelectorAll('.bankItem')[i].classList.remove('used')
-                            }
-                        }
-                    })
-                }
+
+                paragraph.querySelectorAll('.blank').forEach(el => {
+                    if (sortedAnswers.includes(el.textContent)) {
+                        bankGroup.querySelectorAll('.bankItem')[sortedAnswers.indexOf(el.textContent)].classList.add('used')
+                    }
+                })
             }
 
             break;
