@@ -161,8 +161,10 @@ function showQuestion(questionNumber) {
 
                     element.onkeyup = () => {
                         checkForBlanks()
+                        checkForUses()
                     }
                     element.onblur = () => {
+                        checkForUses()
                         if (!element.textContent == '') {
                             if (!upperCaseArray.includes(element.textContent.toUpperCase())) {
                                 const err = showError('Please use only words from the bank.')
@@ -190,6 +192,8 @@ function showQuestion(questionNumber) {
                 answerEl.addEventListener('click', () => {
                     paragraph.querySelectorAll('.blank')[activeBlank].textContent = answerEl.textContent
 
+                    checkForUses()
+
                     checkForBlanks()
 
                     if (activeBlank !== (paragraph.querySelectorAll('.blank').length - 1)) activeBlank++
@@ -212,7 +216,8 @@ function showQuestion(questionNumber) {
                         submitBtn.classList.add('disabled')
                     }
                 })
-
+            }
+            function checkForUses() {
                 let sortedAnswers = question.answers.sort()
 
                 for (let i = 0; i < sortedAnswers.length; i++) {
@@ -220,7 +225,11 @@ function showQuestion(questionNumber) {
 
                     paragraph.querySelectorAll('.blank').forEach(el => {
                         if (el.textContent == item) {
-                            
+                            bankGroup.querySelectorAll('.bankItem')[i].classList.add('used')
+                        } else {
+                            if (bankGroup.querySelectorAll('.bankItem')[i].classList.contains('used')) {
+                                bankGroup.querySelectorAll('.bankItem')[i].classList.remove('used')
+                            }
                         }
                     })
                 }

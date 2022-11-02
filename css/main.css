@@ -451,6 +451,7 @@ button.disabled {
     animation: input-btm .15s;
     transform-origin: center;
 }
+
 .blanksParagraph .blank:focus {
     position: relative;
     border-radius: 10px 10px 3px 3px;
@@ -459,23 +460,35 @@ button.disabled {
 .fillInBlanks .blanksParagraph .blank.incorrect {
     --background: #ff005c;
 }
+
 .fillInBlanks .blanksParagraph .blank.correct {
     --background: #00f966;
 }
-.blanksParagraph .blank.correct, .blanksParagraph .blank.incorrect {
+
+.blanksParagraph .blank.correct,
+.blanksParagraph .blank.incorrect {
     transition: .2s;
     color: #fff;
     box-shadow: 0px 8px 20px rgba(136, 159, 174, 0.14);
 }
+
 @keyframes input-btm {
     from {
         opacity: 0;
         transform: scaleX(1%);
     }
 }
+
 .errorMessage {
     display: flex;
     align-items: center;
     gap: 15px;
     color: #ff005c;
+}
+
+.bankItem.used {
+    background: #f9faff;
+    color: #acadba;
+    pointer-events: none;
+    transition: .15s;
 }
