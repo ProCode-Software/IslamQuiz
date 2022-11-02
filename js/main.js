@@ -31,7 +31,7 @@ function startQuiz() {
     scoreText.textContent = score;
     questionNumberText.textContent = `Question ${currentQuestion}/${totalQuestions}`
 
-    showQuestion(0)
+    showQuestion(2) // mark1
 }
 function showQuestion(questionNumber) {
     currentQuestion = questionNumber
@@ -43,12 +43,14 @@ function showQuestion(questionNumber) {
     const questionNumberText = document.querySelector("header .questionNumberLabel");
 
     const question = questions[questionNumber]
-    questionLabel.textContent = question.question
+    questionLabel.textContent = (question.type == 'fillInBlanks' ? 'Fill in the blanks with the correct words from the bank.' : question.question)
     questionNumberText.textContent = `Question ${currentQuestion + 1}/${totalQuestions}`
 
     let playerAnswer = undefined;
     submitBtn.classList.add('disabled')
-    submitBtn.textContent = 'Submit'
+
+    document.querySelector('.main-content .submitArea .continueBtn').style.display = 'none'
+    submitBtn.style.display = 'flex'
 
     answersFrame.innerHTML = ''
     let letters = 'ABCDEF'.split('')
@@ -104,6 +106,67 @@ function showQuestion(questionNumber) {
             }
 
             break;
+        case 'fillInBlanks':
+
+            let activeBlank = 0
+            const bankEl = document.createElement('div')
+            bankEl.className = 'wordBank'
+            const bankLabel = document.createElement('div')
+            bankLabel.className = 'bankTitle'
+            const bankGroup = document.createElement('div')
+            bankGroup.className = 'bankGroup'
+
+            bankLabel.append(document.createTextNode('Word Bank'))
+
+            bankEl.append(bankLabel, bankGroup)
+
+            const paragraph = document.createElement('p')
+            paragraph.innerHTML = question.sentence.replaceAll('%%', `<div contenteditable class="blank" spellcheck="off"></div>`)
+            paragraph.className = 'blanksParagraph'
+
+
+            for (let i = 0; i < paragraph.querySelectorAll('.blank').length; i++) {
+                const element = paragraph.querySelectorAll('.blank')[i]
+                element.id = `blank${letters[i].toUpperCase()}`
+                element.addEventListener('focus', () => {
+                    activeBlank = letters.indexOf(element.id.replace('blank', ''))
+
+                    element.onkeyup = () => {
+                        let allBlanksFilled = undefined
+
+                        paragraph.querySelectorAll('.blank').forEach(el => {
+                            allBlanksFilled = (el.textContent == '' ? false : true)
+                            
+                            if (allBlanksFilled == true) {
+                                submitBtn.classList.remove('disabled')
+                            } else {
+                                submitBtn.classList.add('disabled')
+                            }
+                        })
+                    }
+                })
+            }
+
+            for (let i = 0; i < question.answers.length; i++) {
+                const answersSorted = question.answers.sort()
+                const answerText = answersSorted[i]
+                const answerEl = document.createElement('div')
+                answerEl.className = 'bankItem'
+                answerEl.append(document.createTextNode(answerText))
+
+                bankGroup.append(answerEl)
+
+                answerEl.addEventListener('click', () => {
+                    paragraph.querySelectorAll('.blank')[activeBlank].textContent += answerEl.textContent
+
+                    if (activeBlank == 0) activeBlank++
+                })
+            }
+
+            answersFrame.append(bankEl, paragraph)
+
+            answersFrame.classList.add('fillInBlanks')
+            break;
         default:
             throw console.error('Invalid question type');
             break;
@@ -117,10 +180,13 @@ function checkAnswer(answer) {
     console.log('cq = ' + currentQuestion);
     const scoreText = document.querySelector("header .scoreText");
     const submitBtn = document.querySelector('.main-content .submitArea .submitBtn')
+    const continueBtn = document.querySelector('.main-content .submitArea .continueBtn')
     const answersFrame = document.querySelector('.main-content .answersArea')
-    let gettingPoints = true;
 
     let playerAnswerEl;
+
+    continueBtn.style.display = 'flex'
+    submitBtn.style.display = 'none'
 
     switch (question.type) {
         case 'multipleChoice':
@@ -128,6 +194,8 @@ function checkAnswer(answer) {
             break;
         case 'trueFalse':
             playerAnswerEl = answersFrame.querySelectorAll('.answer')[answer == true ? 0 : 1]
+            break;
+        case 'fillInBlanks':
             break;
         default:
             playerAnswerEl = answersFrame.querySelectorAll('.answer')[answer]
@@ -141,9 +209,8 @@ function checkAnswer(answer) {
 <path d="M21.5 6.62L9.73566 18.3843L3 11.6487" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
 </svg>
 `
-        if (gettingPoints == true) {
-            score += question.points
-        }
+        score += question.points
+
         scoreText.innerHTML = score
     } else {
         playerAnswerEl.classList.add('incorrect')
@@ -153,12 +220,15 @@ function checkAnswer(answer) {
 `
         console.log('incorrect');
     }
-    gettingPoints = false
+    continueBtn.style.display = 'flex'
     if (currentQuestion == questions.length - 1) {
-        submitBtn.innerHTML = 'Finish'
+        continueBtn.innerHTML = 'Finish'
+        continueBtn.onclick = () => {
+            console.log('done!!!');
+        }
     } else {
-        submitBtn.innerHTML = 'Continue'
-        submitBtn.onclick = () => {
+        continueBtn.onclick = () => {
+            continueBtn.style.display = 'none'
             showQuestion(currentQuestion + 1)
         }
     }

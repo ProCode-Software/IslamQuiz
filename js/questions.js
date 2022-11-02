@@ -14,4 +14,12 @@ const questions = [
         points: 20,
         correct: 1
     },
+    {
+        type: 'fillInBlanks',
+        correct: ['fighting', 'flee'],
+        notes: 'Add 10 with 10 and get 20. It is that simple.',
+        sentence: 'They were %%, so they had to %%.',
+        points: 100,
+        answers: ['fighting', 'flee', 'arguing', 'drive away']
+    },
 ]
