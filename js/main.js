@@ -31,7 +31,7 @@ function startQuiz() {
     scoreText.textContent = score;
     questionNumberText.textContent = `Question ${currentQuestion}/${totalQuestions}`
 
-    showQuestion(2) // mark1
+    showQuestion(0) // mark1
 }
 function showQuestion(questionNumber) {
     currentQuestion = questionNumber
@@ -132,17 +132,7 @@ function showQuestion(questionNumber) {
                     activeBlank = letters.indexOf(element.id.replace('blank', ''))
 
                     element.onkeyup = () => {
-                        let allBlanksFilled = undefined
-
-                        paragraph.querySelectorAll('.blank').forEach(el => {
-                            allBlanksFilled = (el.textContent == '' ? false : true)
-                            
-                            if (allBlanksFilled == true) {
-                                submitBtn.classList.remove('disabled')
-                            } else {
-                                submitBtn.classList.add('disabled')
-                            }
-                        })
+                        checkForBlanks()
                     }
                 })
             }
@@ -157,7 +147,9 @@ function showQuestion(questionNumber) {
                 bankGroup.append(answerEl)
 
                 answerEl.addEventListener('click', () => {
-                    paragraph.querySelectorAll('.blank')[activeBlank].textContent += answerEl.textContent
+                    paragraph.querySelectorAll('.blank')[activeBlank].textContent = answerEl.textContent
+
+                    checkForBlanks()
 
                     if (activeBlank == 0) activeBlank++
                 })
@@ -166,6 +158,21 @@ function showQuestion(questionNumber) {
             answersFrame.append(bankEl, paragraph)
 
             answersFrame.classList.add('fillInBlanks')
+
+            function checkForBlanks() {
+                let allBlanksFilled = undefined
+
+                paragraph.querySelectorAll('.blank').forEach(el => {
+                    allBlanksFilled = (el.textContent == '' ? false : true)
+
+                    if (allBlanksFilled == true) {
+                        submitBtn.classList.remove('disabled')
+                    } else {
+                        submitBtn.classList.add('disabled')
+                    }
+                })
+            }
+
             break;
         default:
             throw console.error('Invalid question type');
