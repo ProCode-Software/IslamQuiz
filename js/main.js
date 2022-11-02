@@ -212,6 +212,18 @@ function showQuestion(questionNumber) {
                         submitBtn.classList.add('disabled')
                     }
                 })
+
+                let sortedAnswers = question.answers.sort()
+
+                for (let i = 0; i < sortedAnswers.length; i++) {
+                    let item = sortedAnswers[i]
+
+                    paragraph.querySelectorAll('.blank').forEach(el => {
+                        if (el.textContent == item) {
+                            
+                        }
+                    })
+                }
             }
 
             break;
