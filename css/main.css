@@ -96,7 +96,7 @@ main {
     --fg: hsla(130, 67%, 50%, 1);
 }
 
-.questionType.whichOnes {
+.questionType.fillInTheBlanks {
     --bg: hsla(202, 100%, 97%, 1);
     --fg: hsla(209, 89%, 50%, 1);
 }

@@ -36,7 +36,7 @@ function startQuiz() {
 function showQuestion(questionNumber) {
     currentQuestion = questionNumber
     console.log(currentQuestion);
-    const questionTypeText = document.querySelector('question-header .questionType')
+    const questionTypeText = document.querySelector('.question-header .questionType')
     const questionLabel = document.querySelector('.question-header .questionLabel')
     const answersFrame = document.querySelector('.main-content .answersArea')
     const submitBtn = document.querySelector('.main-content .submitArea .submitBtn')
@@ -54,6 +54,31 @@ function showQuestion(questionNumber) {
 
     answersFrame.innerHTML = ''
     let letters = 'ABCDEF'.split('')
+
+    let typeText, typeClass
+
+    switch (question.type) {
+        case 'multipleChoice':
+            typeClass = 'multipleChoice'
+            typeText = 'Multiple choice'
+            break;
+        case 'trueFalse':
+            typeClass = 'trueFalse'
+            typeText = 'True or false'
+            break;
+        case 'fillInBlanks':
+            typeClass = 'fillInTheBlanks'
+            typeText = 'Fill in the blanks'
+            break;
+    
+        default:
+            console.error('Invalid question type');
+            break;
+    }
+
+    questionTypeText.classList.add(typeClass)
+    questionTypeText.textContent = typeText
+
     switch (question.type) {
         case 'multipleChoice':
             for (let i = 0; i < question.answers.length; i++) {
