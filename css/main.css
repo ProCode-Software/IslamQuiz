@@ -97,8 +97,8 @@ main {
 }
 
 .questionType.fillInTheBlanks {
-    --bg: hsla(202, 100%, 97%, 1);
-    --fg: hsla(209, 89%, 50%, 1);
+    --bg: hsla(209, 99%, 97.4%, 1);
+    --fg: hsla(209, 94%, 55%, 1);
 }
 
 ::selection {
