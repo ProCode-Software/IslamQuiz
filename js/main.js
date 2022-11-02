@@ -176,7 +176,7 @@ function showQuestion(questionNumber) {
 
                     checkForBlanks()
 
-                    if (activeBlank == 0) activeBlank++
+                    if (activeBlank !== (paragraph.querySelectorAll('.blank').length - 1)) activeBlank++
                 })
             }
 
