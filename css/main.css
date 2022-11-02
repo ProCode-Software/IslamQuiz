@@ -473,3 +473,9 @@ button.disabled {
         transform: scaleX(1%);
     }
 }
+.errorMessage {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #ff005c;
+}

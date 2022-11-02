@@ -70,7 +70,7 @@ function showQuestion(questionNumber) {
             typeClass = 'fillInTheBlanks'
             typeText = 'Fill in the blanks'
             break;
-    
+
         default:
             console.error('Invalid question type');
             break;
@@ -145,6 +145,9 @@ function showQuestion(questionNumber) {
 
             bankEl.append(bankLabel, bankGroup)
 
+            const upperCaseArray = []
+            question.answers.forEach(q => upperCaseArray.push(q.toUpperCase()))
+
             const paragraph = document.createElement('p')
             paragraph.innerHTML = question.sentence.replaceAll('%%', `<div contenteditable class="blank" spellcheck="off"></div>`)
             paragraph.className = 'blanksParagraph'
@@ -158,6 +161,19 @@ function showQuestion(questionNumber) {
 
                     element.onkeyup = () => {
                         checkForBlanks()
+                    }
+                    element.onblur = () => {
+                        if (!element.textContent == '') {
+                            if (!upperCaseArray.includes(element.textContent.toUpperCase())) {
+                                const err = showError('Please use only words from the bank.')
+
+                                answersFrame.append(err)
+
+                                setTimeout(() => {
+                                    err.remove()
+                                }, 3000);
+                            }
+                        }
                     }
                 })
             }
@@ -264,4 +280,14 @@ function checkAnswer(answer) {
             showQuestion(currentQuestion + 1)
         }
     }
+}
+
+function showError(msg) {
+    const errorMsg = document.createElement('div')
+    errorMsg.className = 'errorMessage'
+    errorMsg.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.875C6.40812 1.875 1.875 6.40812 1.875 12C1.875 17.5919 6.40812 22.125 12 22.125C17.5919 22.125 22.125 17.5919 22.125 12C22.125 6.40812 17.5919 1.875 12 1.875ZM12.875 7.11H11.125V13.4332H12.875V7.11ZM10.9157 15.8057C10.9157 15.2068 11.4011 14.7213 12 14.7213C12.5989 14.7213 13.0843 15.2068 13.0843 15.8057C13.0843 16.4045 12.5989 16.89 12 16.89C11.4011 16.89 10.9157 16.4045 10.9157 15.8057Z" fill="currentColor"/>
+</svg><span class="text">${msg}</span>
+`
+    return errorMsg
 }
