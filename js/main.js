@@ -255,6 +255,7 @@ function checkAnswer(answer) {
     const submitBtn = document.querySelector('.main-content .submitArea .submitBtn')
     const continueBtn = document.querySelector('.main-content .submitArea .continueBtn')
     const answersFrame = document.querySelector('.main-content .answersArea')
+    const streakLabel = document.querySelector('.answerStreak')
 
     let playerAnswerEl;
 
@@ -285,7 +286,6 @@ function checkAnswer(answer) {
 </svg>
 `
             score += question.points
-
             scoreText.innerHTML = score
         } else {
             playerAnswerEl.classList.add('incorrect')
@@ -299,6 +299,7 @@ function checkAnswer(answer) {
         const blanks = answersFrame.querySelectorAll('.blank')
         const blankAnswers = []
         let allCorrect;
+        let correctBlanks = 0
 
         for (let i = 0; i < blanks.length; i++) {
             const blank = blanks[i]
@@ -306,6 +307,7 @@ function checkAnswer(answer) {
 
             if (blank.textContent.toLowerCase() == question.correct[i]) {
                 blank.classList.add('correct')
+                correctBlanks++
 
                 if (allCorrect !== false) {
                     allCorrect = true
@@ -315,6 +317,9 @@ function checkAnswer(answer) {
                 allCorrect = false
             }
         }
+
+        score += Math.round(question.points / correctBlanks)
+        scoreText.innerHTML = score
     }
     continueBtn.style.display = 'flex'
     if (currentQuestion == questions.length - 1) {
@@ -339,3 +344,4 @@ function showError(msg) {
 `
     return errorMsg
 }
+

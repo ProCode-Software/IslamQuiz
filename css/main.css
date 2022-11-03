@@ -338,7 +338,7 @@ input:focus {
 
 .headerToolbarWrapper {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     justify-content: flex-end;
 }
 
@@ -492,6 +492,27 @@ button.disabled {
     pointer-events: none;
     transition: .15s;
 }
+
 .readonly {
     pointer-events: none !important;
+}
+
+.answerStreak {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.answerStreak img {
+    width: 24px;
+    height: 24px;
+}
+
+.answerStreak.zero img {
+    filter: saturate(0) opacity(.5);
+}
+
+.answerStreak span {
+    font-weight: 600;
+    font-size: 1.02em;
 }
