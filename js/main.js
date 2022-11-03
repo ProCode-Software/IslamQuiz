@@ -51,6 +51,10 @@ function showQuestion(questionNumber) {
 
     document.querySelector('.main-content .submitArea .continueBtn').style.display = 'none'
     submitBtn.style.display = 'flex'
+    
+    if (answersFrame.classList.contains('readonly')) {
+        answersFrame.classList.remove('readonly')
+    }
 
     answersFrame.innerHTML = ''
     let letters = 'ABCDEF'.split('')
@@ -222,7 +226,7 @@ function showQuestion(questionNumber) {
                 let sortedAnswers = question.answers.sort()
 
                 bankGroup.querySelectorAll('.bankItem').forEach(s => {
-                    if (s.classList.contains('used')){
+                    if (s.classList.contains('used')) {
                         s.classList.remove('used')
                     }
                 })
@@ -256,6 +260,7 @@ function checkAnswer(answer) {
 
     continueBtn.style.display = 'flex'
     submitBtn.style.display = 'none'
+    answersFrame.classList.add('readonly')
 
     switch (question.type) {
         case 'multipleChoice':
@@ -271,23 +276,45 @@ function checkAnswer(answer) {
             break;
     }
 
-    if (question.correct == answer) {
-        console.log('correct');
-        playerAnswerEl.classList.add('correct')
-        playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    if (question.type !== 'fillInBlanks') {
+        if (question.correct == answer) {
+            console.log('correct');
+            playerAnswerEl.classList.add('correct')
+            playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M21.5 6.62L9.73566 18.3843L3 11.6487" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
 </svg>
 `
-        score += question.points
+            score += question.points
 
-        scoreText.innerHTML = score
-    } else {
-        playerAnswerEl.classList.add('incorrect')
-        playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            scoreText.innerHTML = score
+        } else {
+            playerAnswerEl.classList.add('incorrect')
+            playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M5.38128 17.3812L4.76256 17.9999L6 19.2374L6.61872 18.6186L5.38128 17.3812ZM18.6187 6.61872L19.2374 6.00001L18 4.76256L17.3813 5.38128L18.6187 6.61872ZM6.61872 5.38128L6 4.76256L4.76256 6L5.38128 6.61872L6.61872 5.38128ZM17.3813 18.6186L18 19.2374L19.2374 17.9999L18.6187 17.3812L17.3813 18.6186ZM6.61872 18.6186L12.6187 12.6187L11.3812 11.3812L5.38128 17.3812L6.61872 18.6186ZM12.6187 12.6187L18.6187 6.61872L17.3813 5.38128L11.3812 11.3812L12.6187 12.6187ZM5.38128 6.61872L11.3812 12.6187L12.6187 11.3812L6.61872 5.38128L5.38128 6.61872ZM11.3812 12.6187L17.3813 18.6186L18.6187 17.3812L12.6187 11.3812L11.3812 12.6187Z" fill="currentColor"/>
 </svg>
 `
-        console.log('incorrect');
+            console.log('incorrect');
+        }
+    } else {
+        const blanks = answersFrame.querySelectorAll('.blank')
+        const blankAnswers = []
+        let allCorrect;
+
+        for (let i = 0; i < blanks.length; i++) {
+            const blank = blanks[i]
+            blankAnswers.push(blank.textContent)
+
+            if (blank.textContent.toLowerCase() == question.correct[i]) {
+                blank.classList.add('correct')
+
+                if (allCorrect !== false) {
+                    allCorrect = true
+                }
+            } else {
+                blank.classList.add('incorrect')
+                allCorrect = false
+            }
+        }
     }
     continueBtn.style.display = 'flex'
     if (currentQuestion == questions.length - 1) {
