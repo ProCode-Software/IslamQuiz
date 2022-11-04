@@ -435,7 +435,12 @@ button.disabled {
     transition: .15s
 }
 
-.blanksParagraph .blank:empty:not(:focus) {
+.blanksParagraph .blank:empty {
+    width: 100px;
+    transition: .15s;
+}
+.blanksParagraph .blank:empty:focus {
+    transition: .15s;
     width: 100px;
 }
 
@@ -456,6 +461,7 @@ button.disabled {
 .blanksParagraph .blank:focus {
     position: relative;
     border-radius: 10px 10px 3px 3px;
+    transition: .15s;
 }
 
 .fillInBlanks .blanksParagraph .blank.incorrect {
@@ -506,10 +512,12 @@ button.disabled {
 .answerStreak img {
     width: 24px;
     height: 24px;
+    transition: .3s;
 }
 
 .answerStreak.zero img {
     filter: saturate(0) opacity(.5);
+    transition: .3s;
 }
 
 .answerStreak span {

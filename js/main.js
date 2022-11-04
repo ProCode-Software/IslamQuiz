@@ -51,7 +51,7 @@ function showQuestion(questionNumber) {
 
     document.querySelector('.main-content .submitArea .continueBtn').style.display = 'none'
     submitBtn.style.display = 'flex'
-    
+
     if (answersFrame.classList.contains('readonly')) {
         answersFrame.classList.remove('readonly')
     }
@@ -175,6 +175,8 @@ function showQuestion(questionNumber) {
                                 const err = showError('Please use only words from the bank.')
 
                                 answersFrame.append(err)
+                                element.textContent = ''
+                                activeBlank = i
 
                                 setTimeout(() => {
                                     err.remove()
@@ -217,6 +219,13 @@ function showQuestion(questionNumber) {
 
                     if (allBlanksFilled == true) {
                         submitBtn.classList.remove('disabled')
+                        const answer = []
+                        
+                        paragraph.querySelectorAll('.blank').forEach(bx => {
+                            answer.push(bx.textContent)
+                        })
+                        playerAnswer = answer
+
                     } else {
                         submitBtn.classList.add('disabled')
                     }
@@ -245,6 +254,10 @@ function showQuestion(questionNumber) {
             break;
     }
 
+    if (question.type !== 'fillInBlanks') {
+        if (answersFrame.classList.contains('fillInBlanks')) answersFrame.classList.remove('fillInBlanks')
+    }
+
     submitBtn.addEventListener('click', () => checkAnswer(playerAnswer))
 }
 function checkAnswer(answer) {
@@ -256,6 +269,7 @@ function checkAnswer(answer) {
     const continueBtn = document.querySelector('.main-content .submitArea .continueBtn')
     const answersFrame = document.querySelector('.main-content .answersArea')
     const streakLabel = document.querySelector('.answerStreak')
+    const streakText = streakLabel.querySelector('span')
 
     let playerAnswerEl;
 
@@ -287,6 +301,8 @@ function checkAnswer(answer) {
 `
             score += question.points
             scoreText.innerHTML = score
+            answerStreak++
+            
         } else {
             playerAnswerEl.classList.add('incorrect')
             playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -294,32 +310,38 @@ function checkAnswer(answer) {
 </svg>
 `
             console.log('incorrect');
+            answerStreak = 0
         }
     } else {
-        const blanks = answersFrame.querySelectorAll('.blank')
-        const blankAnswers = []
-        let allCorrect;
+        const allBlankAnswers = answer
         let correctBlanks = 0
+        let allCorrect;
+        const blankEls = answersFrame.querySelectorAll('.blank')
 
-        for (let i = 0; i < blanks.length; i++) {
-            const blank = blanks[i]
-            blankAnswers.push(blank.textContent)
-
-            if (blank.textContent.toLowerCase() == question.correct[i]) {
-                blank.classList.add('correct')
+        for (let i = 0; i < allBlankAnswers.length; i++) {
+            const blank = allBlankAnswers[i]
+            if (blank == question.correct[i]) {
+                blankEls[i].classList.add('correct')
                 correctBlanks++
-
-                if (allCorrect !== false) {
+                if (allCorrect !== 'false') {
                     allCorrect = true
                 }
             } else {
-                blank.classList.add('incorrect')
+                blankEls[i].classList.add('incorrect')
                 allCorrect = false
             }
         }
 
-        score += Math.round(question.points / correctBlanks)
+        if (correctBlanks > 0) {
+            score += Math.round((question.points / question.correct.length) * correctBlanks)
+        }
         scoreText.innerHTML = score
+
+        if (allCorrect == true) { //all correct
+            answerStreak = answerStreak + 2
+        } else { // some/none correct
+            answerStreak = 0
+        }
     }
     continueBtn.style.display = 'flex'
     if (currentQuestion == questions.length - 1) {
@@ -331,6 +353,15 @@ function checkAnswer(answer) {
         continueBtn.onclick = () => {
             continueBtn.style.display = 'none'
             showQuestion(currentQuestion + 1)
+        }
+    }
+
+    streakText.innerHTML = answerStreak
+    if (answerStreak == 0) {
+        streakLabel.classList.add('zero')
+    } else {
+        if (streakLabel.classList.contains('zero')) {
+            streakLabel.classList.remove('zero')
         }
     }
 }
