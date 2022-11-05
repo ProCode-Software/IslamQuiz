@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/fonts.css">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -50,8 +52,25 @@
             </div>
             <div class="completion">
                 <div class="left">
-                    <div class="sectionTitle">You completed the test!</div>
-                    <div class="completionGraph"></div>
+                    <div class="sectionTitleGroup">
+                        <div class="subtitle">Allah vs. God</div>
+                        <div class="sectionTitle">You completed the test!</div>
+                    </div>
+                    <div class="completionGraph graphset">
+                        <div class="graph score">
+                            <div class="graph-content">
+                                <div class="score">97%</div>
+                                <div class="subscore">
+                                    121/126
+                                </div>
+                            </div>
+                            <svg width="350" height="350" viewBox="0 0 350 350" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="175" cy="175" r="167.5" stroke="#12FF8D" stroke-width="8"
+                                    id="chart-score" />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
                 <div class="right"></div>
             </div>
@@ -61,4 +80,5 @@
     <script src="js/questions.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

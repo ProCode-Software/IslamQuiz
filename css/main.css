@@ -546,4 +546,88 @@ button.disabled {
 .sectionTitle {
     font-size: 2em;
     font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.graphset {
+    --diameter: 30vw;
+    width: var(--diameter);
+    max-width: 400px;
+    max-height: 400px;
+    height: var(--diameter);
+}
+
+.graph {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    --size: 100%;
+}
+
+.graph .graph-content {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: var(--size);
+    height: var(--size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 7px;
+    z-index: 2;
+}
+
+.graph svg {
+    width: var(--size);
+    height: var(--size);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.graph #chart-score {
+    transition: stroke-dashoffset 1s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    animation: prog .8s ease-in-out;
+}
+
+.graph-content .score {
+    font-size: 3em;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.graph-content .subscore {
+    font-size: 1.3em;
+}
+
+@keyframes prog {
+    from {
+        stroke-dashoffset: 1024;
+    }
+}
+
+.completeTHeading {
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+}
+
+.graph svg {
+    color: #56FE99;
+}
+
+.graph svg.low {
+    color: #ff496c !important;
+}
+.graph-content .score {
+    font-weight: 600;
+}
+.graph-content .subscore {
+    font-size: 1.2em;
 }
