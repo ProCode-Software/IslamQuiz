@@ -21,5 +21,5 @@ const questions = [
         sentence: 'They were %% and %%, so they had to %%.',
         points: 100,
         answers: ['fighting', 'flee', 'arguing', 'drive away', 'killing others', 'stealing']
-    },
+    }
 ]

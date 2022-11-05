@@ -11,7 +11,8 @@ body {
     -webkit-text-size-adjust: 100%;
     font-weight: 400;
     --accent: #054cf3;
-
+    --color-correct: #00d7a1;
+    --color-incorrect: #f8065f;
 }
 
 .container {
@@ -93,12 +94,12 @@ main {
 
 .questionType.multipleChoice {
     --bg: hsla(148, 83%, 95%, 1);
-    --fg: hsla(130, 67%, 50%, 1);
+    --fg: hsla(130, 61%, 50%, 1);
 }
 
 .questionType.fillInTheBlanks {
-    --bg: hsla(209, 99%, 97.4%, 1);
-    --fg: hsla(209, 94%, 55%, 1);
+    --bg: hsla(209, 100%, 96%, 1);
+    --fg: hsla(209, 91%, 58%, 1);
 }
 
 ::selection {
@@ -234,31 +235,31 @@ button.primary:hover {
 }
 
 .answer.correct {
-    background: #00f966;
+    background: var(--color-correct);
     color: #fff;
     box-shadow: 0px 8px 20px rgba(136, 159, 174, 0.14);
     font-weight: 600;
     transition: .2s;
-    border-color: #00f966 !important;
+    border-color: var(--color-correct) !important;
 }
 
 .answer.correct .keyboardShortcut {
-    --color: #00f966 !important;
+    --color: var(--color-correct) !important;
     box-shadow: none;
     transition: .2s;
 }
 
 .answer.incorrect {
-    background: #ff005c;
+    background: var(--color-incorrect);
     color: #fff;
     box-shadow: 0px 8px 20px rgba(136, 159, 174, 0.14);
     font-weight: 600;
     transition: .2s;
-    border-color: #ff005c !important;
+    border-color: var(--color-incorrect) !important;
 }
 
 .answer.incorrect .keyboardShortcut {
-    --color: #ff005c !important;
+    --color: var(--color-incorrect) !important;
     box-shadow: none;
     transition: .2s;
 }
@@ -337,7 +338,7 @@ input:focus {
 
 .headerToolbarWrapper {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     justify-content: flex-end;
 }
 
@@ -429,12 +430,17 @@ button.disabled {
     --background: #084be7;
     color: #fff;
     transition: background .15s;
-    box-shadow: 0 3px 7px rgba(5, 33, 97, 0.1);
+    box-shadow: 0 3px 7px rgba(83, 88, 99, 0.1);
     background: var(--background);
     transition: .15s
 }
 
-.blanksParagraph .blank:empty:not(:focus) {
+.blanksParagraph .blank:empty {
+    width: 100px;
+    transition: .15s;
+}
+.blanksParagraph .blank:empty:focus {
+    transition: .15s;
     width: 100px;
 }
 
@@ -455,21 +461,21 @@ button.disabled {
 .blanksParagraph .blank:focus {
     position: relative;
     border-radius: 10px 10px 3px 3px;
+    transition: .15s;
 }
 
 .fillInBlanks .blanksParagraph .blank.incorrect {
-    --background: #ff005c;
+    --background: var(--color-incorrect) !important;
 }
 
 .fillInBlanks .blanksParagraph .blank.correct {
-    --background: #00f966;
+    --background: var(--color-correct) !important;
 }
 
 .blanksParagraph .blank.correct,
 .blanksParagraph .blank.incorrect {
     transition: .2s;
     color: #fff;
-    box-shadow: 0px 8px 20px rgba(136, 159, 174, 0.14);
 }
 
 @keyframes input-btm {
@@ -483,7 +489,7 @@ button.disabled {
     display: flex;
     align-items: center;
     gap: 15px;
-    color: #ff005c;
+    color: var(--color-incorrect);
 }
 
 .bankItem.used {
@@ -491,4 +497,30 @@ button.disabled {
     color: #acadba;
     pointer-events: none;
     transition: .15s;
+}
+
+.readonly {
+    pointer-events: none !important;
+}
+
+.answerStreak {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.answerStreak img {
+    width: 24px;
+    height: 24px;
+    transition: .3s;
+}
+
+.answerStreak.zero img {
+    filter: saturate(0) opacity(.5);
+    transition: .3s;
+}
+
+.answerStreak span {
+    font-weight: 600;
+    font-size: 1.02em;
 }
