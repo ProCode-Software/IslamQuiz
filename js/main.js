@@ -3,7 +3,6 @@ const onboardingFrame = document.querySelector("main .onboarding");
 const quizFrame = document.querySelector("main .main-content");
 
 let score = 0
-let answerStreak = 0
 let currentQuestion = 0
 let totalQuestions = questions.length
 
@@ -268,8 +267,6 @@ function checkAnswer(answer) {
     const submitBtn = document.querySelector('.main-content .submitArea .submitBtn')
     const continueBtn = document.querySelector('.main-content .submitArea .continueBtn')
     const answersFrame = document.querySelector('.main-content .answersArea')
-    const streakLabel = document.querySelector('.answerStreak')
-    const streakText = streakLabel.querySelector('span')
 
     let playerAnswerEl;
 
@@ -301,7 +298,6 @@ function checkAnswer(answer) {
 `
             score += question.points
             scoreText.innerHTML = score
-            answerStreak++
             
         } else {
             playerAnswerEl.classList.add('incorrect')
@@ -310,7 +306,6 @@ function checkAnswer(answer) {
 </svg>
 `
             console.log('incorrect');
-            answerStreak = 0
         }
     } else {
         const allBlankAnswers = answer
@@ -336,12 +331,6 @@ function checkAnswer(answer) {
             score += Math.round((question.points / question.correct.length) * correctBlanks)
         }
         scoreText.innerHTML = score
-
-        if (allCorrect == true) { //all correct
-            answerStreak = answerStreak + 2
-        } else { // some/none correct
-            answerStreak = 0
-        }
     }
     continueBtn.style.display = 'flex'
     if (currentQuestion == questions.length - 1) {
@@ -353,15 +342,6 @@ function checkAnswer(answer) {
         continueBtn.onclick = () => {
             continueBtn.style.display = 'none'
             showQuestion(currentQuestion + 1)
-        }
-    }
-
-    streakText.innerHTML = answerStreak
-    if (answerStreak == 0) {
-        streakLabel.classList.add('zero')
-    } else {
-        if (streakLabel.classList.contains('zero')) {
-            streakLabel.classList.remove('zero')
         }
     }
 }
