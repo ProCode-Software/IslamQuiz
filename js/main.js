@@ -1,11 +1,14 @@
 const userName = localStorage.getItem("name");
 const onboardingFrame = document.querySelector("main .onboarding");
 const quizFrame = document.querySelector("main .main-content");
+const completionFrame = document.querySelector("main .completion");
 
 let score = 0
 let currentQuestion = 0
 let totalQuestions = questions.length
 
+
+completionFrame.style.display = "none";
 if (userName) {
     onboardingFrame.style.display = "none";
     quizFrame.style.display = "flex";
@@ -219,7 +222,7 @@ function showQuestion(questionNumber) {
                     if (allBlanksFilled == true) {
                         submitBtn.classList.remove('disabled')
                         const answer = []
-                        
+
                         paragraph.querySelectorAll('.blank').forEach(bx => {
                             answer.push(bx.textContent)
                         })
@@ -293,16 +296,16 @@ function checkAnswer(answer) {
             console.log('correct');
             playerAnswerEl.classList.add('correct')
             playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M21.5 6.62L9.73566 18.3843L3 11.6487" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+<path d="M21.5 6.62L9.73566 18.3843L3 11.6487" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
 </svg>
 `
             score += question.points
             scoreText.innerHTML = score
-            
+
         } else {
             playerAnswerEl.classList.add('incorrect')
             playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M5.38128 17.3812L4.76256 17.9999L6 19.2374L6.61872 18.6186L5.38128 17.3812ZM18.6187 6.61872L19.2374 6.00001L18 4.76256L17.3813 5.38128L18.6187 6.61872ZM6.61872 5.38128L6 4.76256L4.76256 6L5.38128 6.61872L6.61872 5.38128ZM17.3813 18.6186L18 19.2374L19.2374 17.9999L18.6187 17.3812L17.3813 18.6186ZM6.61872 18.6186L12.6187 12.6187L11.3812 11.3812L5.38128 17.3812L6.61872 18.6186ZM12.6187 12.6187L18.6187 6.61872L17.3813 5.38128L11.3812 11.3812L12.6187 12.6187ZM5.38128 6.61872L11.3812 12.6187L12.6187 11.3812L6.61872 5.38128L5.38128 6.61872ZM11.3812 12.6187L17.3813 18.6186L18.6187 17.3812L12.6187 11.3812L11.3812 12.6187Z" fill="currentColor"/>
+<path d="M4.29285 18.2929L3.58574 19L4.99995 20.4142L5.70706 19.7071L4.29285 18.2929ZM19.7072 5.70711L20.4143 5.00001L19.0001 3.58579L18.2929 4.29289L19.7072 5.70711ZM5.70706 4.29289L4.99995 3.58579L3.58574 5L4.29285 5.70711L5.70706 4.29289ZM18.2929 19.7071L19.0001 20.4142L20.4143 19L19.7072 18.2929L18.2929 19.7071ZM5.70706 19.7071L12.7071 12.7071L11.2928 11.2929L4.29285 18.2929L5.70706 19.7071ZM12.7071 12.7071L19.7072 5.70711L18.2929 4.29289L11.2929 11.2929L12.7071 12.7071ZM4.29285 5.70711L11.2928 12.7071L12.7071 11.2929L5.70706 4.29289L4.29285 5.70711ZM11.2929 12.7071L18.2929 19.7071L19.7072 18.2929L12.7071 11.2929L11.2929 12.7071Z" fill="currentColor"/>
 </svg>
 `
             console.log('incorrect');
@@ -336,7 +339,7 @@ function checkAnswer(answer) {
     if (currentQuestion == questions.length - 1) {
         continueBtn.innerHTML = 'Finish'
         continueBtn.onclick = () => {
-            console.log('done!!!');
+            completeTest()
         }
     } else {
         continueBtn.onclick = () => {
@@ -355,3 +358,10 @@ function showError(msg) {
 `
     return errorMsg
 }
+
+function completeTest() {
+    quizFrame.style.display = 'none'
+    onboardingFrame.style.display = 'none'
+    completionFrame.style.display = 'flex'
+}
+completeTest()
