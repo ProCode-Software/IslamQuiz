@@ -439,6 +439,7 @@ button.disabled {
     width: 100px;
     transition: .15s;
 }
+
 .blanksParagraph .blank:empty:focus {
     transition: .15s;
     width: 100px;
@@ -523,4 +524,26 @@ button.disabled {
 .answerStreak span {
     font-weight: 600;
     font-size: 1.02em;
+}
+
+.completion {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.completion>.left,
+.completion>.right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.sectionTitle {
+    font-size: 2em;
+    font-weight: 600;
 }
