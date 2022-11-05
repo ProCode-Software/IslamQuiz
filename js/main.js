@@ -355,4 +355,3 @@ function showError(msg) {
 `
     return errorMsg
 }
-
