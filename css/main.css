@@ -50,10 +50,11 @@ header>div {
     align-items: center;
     padding: 8px 12px;
     justify-content: center;
+    gap: 3px;
 }
 
 .questionNumberLabel::before {
-    content: 'Question ';
+    content: 'Question';
 }
 
 .headerQuestionWrapper {
@@ -415,6 +416,11 @@ button.disabled {
     font-size: 1.2em;
     display: flex;
     align-items: center;
+    gap: 10px;
+}
+
+body {
+    caret-color: var(--accent);
 }
 
 .fillInBlanks .blanksParagraph .blank {
@@ -782,6 +788,12 @@ button.disabled {
         padding-bottom: 120px;
     }
 
+    .wordBank,
+    .bankGroup,
+    .blanksParagraph {
+        flex-wrap: wrap;
+    }
+
     .submitArea>button {
         width: 100%;
         transition: .2s;
@@ -806,5 +818,9 @@ button.disabled {
 
     .questionNumberLabel::before {
         content: none;
+    }
+
+    .completion>.top {
+        flex-direction: column;
     }
 }

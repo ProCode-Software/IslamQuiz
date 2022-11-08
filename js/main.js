@@ -441,3 +441,4 @@ function completeTest() {
         get('.questionReview').append(mainElement)
     }
 } 
+completeTest()
