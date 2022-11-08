@@ -15,6 +15,14 @@ const questions = [
         correct: 1
     },
     {
+        question: 'The world\'s smallest vioin, really needs a(n) ___________...',
+        type: 'multipleChoice',
+        answers: ['naughty s', 'player', 'armor stand', 'audience'],
+        notes: 'I\'ll blow up into smithereens, and spew myself a symphony',
+        points: 40,
+        correct: 3
+    },
+    {
         type: 'fillInBlanks',
         correct: ['fighting', 'killing others', 'flee'],
         notes: 'Add 10 with 10 and get 20. It is that simple.',

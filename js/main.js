@@ -9,6 +9,7 @@ let currentQuestion = 0
 let totalQuestions = questions.length
 let incorrectQuestions = 0
 let percent;
+let playerAnswers = []
 
 
 completionFrame.style.display = "none";
@@ -275,6 +276,8 @@ function checkAnswer(answer) {
     const answersFrame = document.querySelector('.main-content .answersArea')
 
     let playerAnswerEl;
+    playerAnswers.push(answer + ' cq = ' + currentQuestion)
+    console.log(playerAnswers);
 
     continueBtn.style.display = 'flex'
     submitBtn.style.display = 'none'
@@ -293,6 +296,7 @@ function checkAnswer(answer) {
             playerAnswerEl = answersFrame.querySelectorAll('.answer')[answer]
             break;
     }
+    console.log(playerAnswerEl);
 
     if (question.type !== 'fillInBlanks') {
         if (question.correct == answer) {
@@ -327,10 +331,14 @@ function checkAnswer(answer) {
                 correctBlanks++
                 if (allCorrect !== 'false') {
                     allCorrect = true
-                }
+                // }
             } else {
                 blankEls[i].classList.add('incorrect')
+                /* const clone = blankEls[i].cloneNode()
                 allCorrect = false
+                clone.textContent = question.correct[i]
+                clone.classList.replace('incorrect', 'correct')
+                blankEls[i].parentNode.insertBefore(clone, blankEls[i].nextSibling) */
             }
         }
 
@@ -435,10 +443,27 @@ function completeTest() {
                     optionEl.classList.add('ql-correct')
                 }
             }
+        } else {
+            mainElement.innerHTML = `<div class="qlHeader">
+                                    <div class="number">${i + 1}</div>
+                                    <div class="qlLabel">
+                                        <div class="qlType">Fill in the blanks</div>
+                                        <div class="qlQuestion">${fillInBlanksQuestion}</div>
+                                    </div>
+                                </div>
+                                <div class="qlBody qlOptions"></div>`
+
+            mainElement.querySelector('.qlOptions').innerHTML = `<p class="reviewFBSentence">${question.sentence.replaceAll('%%', '<span class="reviewBlank">sampling</span>')}</p>`
+
+            const paragraph = mainElement.querySelector('.reviewFBSentence')
+            for (let i = 0; i < paragraph.querySelectorAll('.reviewBlank').length; i++) {
+                const blank = paragraph.querySelectorAll('.reviewBlank')[i]
+                blank.innerHTML = question.correct[i]
+            }
         }
 
 
         get('.questionReview').append(mainElement)
     }
-} 
-completeTest()
+}
+// completeTest()
