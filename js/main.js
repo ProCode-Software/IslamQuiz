@@ -2,10 +2,13 @@ const userName = localStorage.getItem("name");
 const onboardingFrame = document.querySelector("main .onboarding");
 const quizFrame = document.querySelector("main .main-content");
 const completionFrame = document.querySelector("main .completion");
+const fillInBlanksQuestion = 'Fill in the blanks with the correct words from the bank.'
 
 let score = 0
 let currentQuestion = 0
 let totalQuestions = questions.length
+let incorrectQuestions = 0
+let percent;
 
 
 completionFrame.style.display = "none";
@@ -45,7 +48,7 @@ function showQuestion(questionNumber) {
     const questionNumberText = document.querySelector("header .questionNumberLabel");
 
     const question = questions[questionNumber]
-    questionLabel.textContent = (question.type == 'fillInBlanks' ? 'Fill in the blanks with the correct words from the bank.' : question.question)
+    questionLabel.textContent = (question.type == 'fillInBlanks' ? fillInBlanksQuestion : question.question)
     questionNumberText.textContent = `Question ${currentQuestion + 1}/${totalQuestions}`
 
     let playerAnswer = undefined;
@@ -304,6 +307,7 @@ function checkAnswer(answer) {
 
         } else {
             playerAnswerEl.classList.add('incorrect')
+            incorrectQuestions++
             playerAnswerEl.querySelector('.right').innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.29285 18.2929L3.58574 19L4.99995 20.4142L5.70706 19.7071L4.29285 18.2929ZM19.7072 5.70711L20.4143 5.00001L19.0001 3.58579L18.2929 4.29289L19.7072 5.70711ZM5.70706 4.29289L4.99995 3.58579L3.58574 5L4.29285 5.70711L5.70706 4.29289ZM18.2929 19.7071L19.0001 20.4142L20.4143 19L19.7072 18.2929L18.2929 19.7071ZM5.70706 19.7071L12.7071 12.7071L11.2928 11.2929L4.29285 18.2929L5.70706 19.7071ZM12.7071 12.7071L19.7072 5.70711L18.2929 4.29289L11.2929 11.2929L12.7071 12.7071ZM4.29285 5.70711L11.2928 12.7071L12.7071 11.2929L5.70706 4.29289L4.29285 5.70711ZM11.2929 12.7071L18.2929 19.7071L19.7072 18.2929L12.7071 11.2929L11.2929 12.7071Z" fill="currentColor"/>
 </svg>
@@ -332,6 +336,9 @@ function checkAnswer(answer) {
 
         if (correctBlanks > 0) {
             score += Math.round((question.points / question.correct.length) * correctBlanks)
+        }
+        if (!allCorrect) {
+            incorrectQuestions++
         }
         scoreText.innerHTML = score
     }
@@ -363,5 +370,75 @@ function completeTest() {
     quizFrame.style.display = 'none'
     onboardingFrame.style.display = 'none'
     completionFrame.style.display = 'flex'
+
+    function get(element) {
+        return completionFrame.querySelector(element)
+    }
+    // p = (total - incorrect) / total * 100
+    percent = Math.round((totalQuestions - incorrectQuestions) / totalQuestions * 100)
+
+    get('.top .quizScore').textContent = `${percent}%`
+
+    get('.stats .stat#stat-correct .statValue').textContent = `${totalQuestions - incorrectQuestions}/${totalQuestions}`
+
+    get('.stats .stat#stat-score .statValue').textContent = score
+
+    get('.questionReview').innerHTML = ''
+
+    let letters = 'ABCDEF'.split('')
+
+
+    for (let i = 0; i < questions.length; i++) {
+        const mainElement = document.createElement('div')
+        const question = questions[i]
+        mainElement.classList.add('sectionItem', 'questionReviewItem')
+
+        if (question.type !== 'fillInBlanks') {
+            let typeText;
+            switch (question.type) {
+                case 'multipleChoice':
+                    typeText = 'Multiple choice'
+                    break;
+                case 'trueFalse':
+                    typeText = 'True or false'
+                    break;
+
+                default:
+                    console.error('Invalid question type');
+                    break;
+            }
+            mainElement.innerHTML = `<div class="qlHeader">
+                                    <div class="number">${i + 1}</div>
+                                    <div class="qlLabel">
+                                        <div class="qlType">${typeText}</div>
+                                        <div class="qlQuestion">${question.question}</div>
+                                    </div>
+                                </div>
+                                <div class="qlBody qlOptions"></div>`
+
+            let answers = question.type == 'trueFalse' ? ['True', 'False'] : question.answers
+            for (let j = 0; j < answers.length; j++) {
+                const option = answers[j]
+                const optionEl = document.createElement('div')
+                optionEl.className = 'qlOption'
+                optionEl.innerHTML = `
+                                        <div class="qlOptionLeft">
+                                            <div class="letter keyboardShortcut" data-key="${letters
+                    [j].toLowerCase()}">${letters
+                    [j].toUpperCase()}</div>
+                                            <div class="qlOptionText">${option}</div>
+                                        </div>
+                                        <div class="qlOptionRight">
+                                        </div>`
+                mainElement.querySelector('.qlOptions').append(optionEl)
+                if (question.correct == j) {
+                    optionEl.classList.add('ql-correct')
+                }
+            }
+        }
+
+
+        get('.questionReview').append(mainElement)
+    }
 }
-completeTest()
+// completeTest()
