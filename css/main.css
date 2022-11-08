@@ -51,6 +51,7 @@ header>div {
     padding: 8px 12px;
     justify-content: center;
 }
+
 .questionNumberLabel::before {
     content: 'Question ';
 }
@@ -778,6 +779,7 @@ button.disabled {
         display: flex;
         transition: .2s;
         height: 100%;
+        padding-bottom: 120px;
     }
 
     .submitArea>button {
@@ -785,11 +787,23 @@ button.disabled {
         transition: .2s;
     }
 
+    .submitArea {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding: 20px;
+        margin: 0;
+        background: #fff;
+        box-shadow: 0 -6px 20px rgba(163, 184, 198, 0.05);
+    }
+
     .main-content {
         display: flex;
         height: 100%;
         transition: .2s;
     }
+
     .questionNumberLabel::before {
         content: none;
     }
