@@ -533,9 +533,6 @@ button.disabled {
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    justify-content: space-around;
-    max-height: 100%;
-    overflow-y: auto;
 }
 
 .completion>.top,
@@ -561,7 +558,7 @@ button.disabled {
 
 
 
-.bottom>section {
+.completion .bottom>section {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -577,9 +574,13 @@ button.disabled {
     color: #6e7a87;
     font-size: 1.1em;
     text-transform: uppercase;
-    border-bottom: 1px solid var(--border-color);
+    /* border-bottom: 1px solid var(--border-color); */
     padding-bottom: 15px;
     width: 100%;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    left: 0;
 }
 
 .sectionMain {
@@ -592,7 +593,7 @@ button.disabled {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 30px;
 }
 
 .questionReviewItem {
@@ -631,6 +632,11 @@ button.disabled {
     gap: 10px;
 }
 
+.completion .bottom {
+    max-height: 100%;
+    overflow-y: auto;
+}
+
 .qlLabel .qlType {
     color: #4f555e;
     background: #eff4fa;
@@ -666,17 +672,20 @@ button.disabled {
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(141, 154, 172, 0.06);
 }
+
 .qlOption.ql-correct {
     background: var(--color-correct);
     border-color: var(--color-correct);
     color: #fff;
     font-weight: 600;
 }
+
 .qlOption.ql-incorrect {
     background: var(--color-incorrect);
     border-color: var(--color-incorrect);
     color: #fff;
 }
+
 .qlOption .letter {
     border: 1px solid var(--border-color);
     height: 28px;
@@ -687,35 +696,67 @@ button.disabled {
     justify-content: center;
     border-radius: 50%;
 }
+
 .qlOptionLeft {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
 }
+
 .qlOption.ql-incorrect .letter {
     background: #fff;
     color: var(--color-incorrect);
     border-color: var(--color-incorrect);
 }
+
 .qlOption.ql-correct .letter {
     background: #fff;
     color: var(--color-correct);
     border-color: var(--color-correct);
 }
+
 .qlOption[class*="ql-"] {
     box-shadow: 0 4px 7px rgba(74, 81, 90, 0.1);
 }
+
 .sectionTitleGroup .subtitle {
     font-size: 1.1em;
     color: #6e7a87;
 }
+
 .sectionTitleGroup {
     display: flex;
     flex-direction: column;
-    gap: 10px;;
+    gap: 10px;
+    ;
 }
+
 .quizScore {
     font-size: 4em;
     font-weight: 600;
+}
+
+.stats {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.stats .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat .statKey {
+    color: #6e7a87;
+    text-transform: uppercase;
+    font-size: .9em;
+}
+
+.stat .statValue {
+    font-size: 1.3em;
 }
