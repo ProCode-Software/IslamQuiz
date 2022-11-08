@@ -34,7 +34,7 @@ function startQuiz() {
     const scoreText = document.querySelector("header .scoreText");
 
     scoreText.textContent = score;
-    questionNumberText.textContent = `Question ${currentQuestion}/${totalQuestions}`
+    questionNumberText.textContent = `${currentQuestion}/${totalQuestions}`
 
     showQuestion(0) // mark1
 }
@@ -49,7 +49,7 @@ function showQuestion(questionNumber) {
 
     const question = questions[questionNumber]
     questionLabel.textContent = (question.type == 'fillInBlanks' ? fillInBlanksQuestion : question.question)
-    questionNumberText.textContent = `Question ${currentQuestion + 1}/${totalQuestions}`
+    questionNumberText.textContent = `${currentQuestion + 1}/${totalQuestions}`
 
     let playerAnswer = undefined;
     submitBtn.classList.add('disabled')
@@ -440,5 +440,4 @@ function completeTest() {
 
         get('.questionReview').append(mainElement)
     }
-}
-// completeTest()
+} 

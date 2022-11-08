@@ -51,6 +51,9 @@ header>div {
     padding: 8px 12px;
     justify-content: center;
 }
+.questionNumberLabel::before {
+    content: 'Question ';
+}
 
 .headerQuestionWrapper {
     display: flex;
@@ -656,7 +659,7 @@ button.disabled {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 15px;
+    gap: 10px;
     width: 100%;
     padding-left: 50px;
 }
@@ -760,10 +763,34 @@ button.disabled {
 .stat .statValue {
     font-size: 1.3em;
 }
+
 @media screen and (min-width: 800px) {
     .questionReview {
         display: grid !important;
         grid-template-columns: 1fr 1fr;
         gap: 20px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .answersArea {
+        flex-direction: column;
+        display: flex;
+        transition: .2s;
+        height: 100%;
+    }
+
+    .submitArea>button {
+        width: 100%;
+        transition: .2s;
+    }
+
+    .main-content {
+        display: flex;
+        height: 100%;
+        transition: .2s;
+    }
+    .questionNumberLabel::before {
+        content: none;
     }
 }
