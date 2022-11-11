@@ -36,235 +36,237 @@ function startQuiz() {
 
     scoreText.textContent = score;
     questionNumberText.textContent = `${currentQuestion}/${totalQuestions}`
-
-    showQuestion(0) // mark1
 }
 function showQuestion(questionNumber) {
     currentQuestion = questionNumber
     console.log(currentQuestion);
-    const questionTypeText = document.querySelector('.question-header .questionType')
-    const questionLabel = document.querySelector('.question-header .questionLabel')
-    const answersFrame = document.querySelector('.main-content .answersArea')
-    const submitBtn = document.querySelector('.main-content .submitArea .submitBtn')
-    const questionNumberText = document.querySelector("header .questionNumberLabel");
+    if (currentQuestion <= questions.length - 1) {
+        const questionTypeText = document.querySelector('.question-header .questionType')
+        const questionLabel = document.querySelector('.question-header .questionLabel')
+        const answersFrame = document.querySelector('.main-content .answersArea')
+        const submitBtn = document.querySelector('.main-content .submitArea .submitBtn')
+        const questionNumberText = document.querySelector("header .questionNumberLabel");
 
-    const question = questions[questionNumber]
-    questionLabel.textContent = (question.type == 'fillInBlanks' ? fillInBlanksQuestion : question.question)
-    questionNumberText.textContent = `${currentQuestion + 1}/${totalQuestions}`
+        const question = questions[questionNumber]
+        questionLabel.textContent = (question.type == 'fillInBlanks' ? fillInBlanksQuestion : question.question)
+        questionNumberText.textContent = `${currentQuestion + 1}/${totalQuestions}`
 
-    let playerAnswer = undefined;
-    submitBtn.classList.add('disabled')
+        let playerAnswer = undefined;
+        submitBtn.classList.add('disabled')
 
-    document.querySelector('.main-content .submitArea .continueBtn').style.display = 'none'
-    submitBtn.style.display = 'flex'
+        document.querySelector('.main-content .submitArea .continueBtn').style.display = 'none'
+        submitBtn.style.display = 'flex'
 
-    if (answersFrame.classList.contains('readonly')) {
-        answersFrame.classList.remove('readonly')
-    }
+        if (answersFrame.classList.contains('readonly')) {
+            answersFrame.classList.remove('readonly')
+        }
 
-    answersFrame.innerHTML = ''
-    let letters = 'ABCDEF'.split('')
+        answersFrame.innerHTML = ''
+        let letters = 'ABCDEF'.split('')
 
-    let typeText, typeClass
+        let typeText, typeClass
 
-    switch (question.type) {
-        case 'multipleChoice':
-            typeClass = 'multipleChoice'
-            typeText = 'Multiple choice'
-            break;
-        case 'trueFalse':
-            typeClass = 'trueFalse'
-            typeText = 'True or false'
-            break;
-        case 'fillInBlanks':
-            typeClass = 'fillInTheBlanks'
-            typeText = 'Fill in the blanks'
-            break;
+        switch (question.type) {
+            case 'multipleChoice':
+                typeClass = 'multipleChoice'
+                typeText = 'Multiple choice'
+                break;
+            case 'trueFalse':
+                typeClass = 'trueFalse'
+                typeText = 'True or false'
+                break;
+            case 'fillInBlanks':
+                typeClass = 'fillInTheBlanks'
+                typeText = 'Fill in the blanks'
+                break;
 
-        default:
-            console.error('Invalid question type');
-            break;
-    }
+            default:
+                console.error('Invalid question type');
+                break;
+        }
 
-    questionTypeText.classList.add(typeClass)
-    questionTypeText.textContent = typeText
+        questionTypeText.classList.add(typeClass)
+        questionTypeText.textContent = typeText
 
-    switch (question.type) {
-        case 'multipleChoice':
-            for (let i = 0; i < question.answers.length; i++) {
-                const answer = question.answers[i]
-                const answerEl = `<div class="answer" data-answer="${i}">
+        switch (question.type) {
+            case 'multipleChoice':
+                for (let i = 0; i < question.answers.length; i++) {
+                    const answer = question.answers[i]
+                    const answerEl = `<div class="answer" data-answer="${i}">
                         <div class="left">
                             <div class="keyboardShortcut" data-key="${letters[i].toLowerCase()}">${letters[i].toUpperCase()}</div>
                             <div class="answer-text">${answer}</div>
                         </div>
                         <div class="right"></div>
                     </div>`
-                answersFrame.innerHTML = answersFrame.innerHTML + answerEl
-            };
-            for (let element of answersFrame.children) {
-                element.addEventListener('click', () => {
-                    const target = element
-                    if (answersFrame.querySelector(`.answer.selected`)) {
-                        answersFrame.querySelector(`.answer.selected`).classList.remove('selected')
-                    }
-                    target.classList.add('selected')
-                    playerAnswer = Number(target.getAttribute('data-answer'))
-                    submitBtn.classList.remove('disabled')
-                    console.log(playerAnswer);
-                })
-            }
+                    answersFrame.innerHTML = answersFrame.innerHTML + answerEl
+                };
+                for (let element of answersFrame.children) {
+                    element.addEventListener('click', () => {
+                        const target = element
+                        if (answersFrame.querySelector(`.answer.selected`)) {
+                            answersFrame.querySelector(`.answer.selected`).classList.remove('selected')
+                        }
+                        target.classList.add('selected')
+                        playerAnswer = Number(target.getAttribute('data-answer'))
+                        submitBtn.classList.remove('disabled')
+                        console.log(playerAnswer);
+                    })
+                }
 
-            break;
-        case 'trueFalse':
-            for (let i = 0; i < 2; i++) {
-                const answerEl = `<div class="answer" data-answer="${i}">
+                break;
+            case 'trueFalse':
+                for (let i = 0; i < 2; i++) {
+                    const answerEl = `<div class="answer" data-answer="${i}">
                         <div class="left">
                             <div class="keyboardShortcut" data-key="${letters[i].toLowerCase()}">${letters[i].toUpperCase()}</div>
                             <div class="answer-text">${i == 0 ? 'True' : 'False'}</div>
                         </div>
                         <div class="right"></div>
                     </div>`
-                answersFrame.innerHTML = answersFrame.innerHTML + answerEl
-            };
-            for (let element of answersFrame.children) {
-                element.addEventListener('click', () => {
-                    const target = element
-                    if (answersFrame.querySelector(`.answer.selected`)) {
-                        answersFrame.querySelector(`.answer.selected`).classList.remove('selected')
-                    }
-                    target.classList.add('selected')
-                    playerAnswer = (target.getAttribute('data-answer') == '0' ? true : false)
-                    submitBtn.classList.remove('disabled')
-                    console.log(playerAnswer);
-                })
-            }
+                    answersFrame.innerHTML = answersFrame.innerHTML + answerEl
+                };
+                for (let element of answersFrame.children) {
+                    element.addEventListener('click', () => {
+                        const target = element
+                        if (answersFrame.querySelector(`.answer.selected`)) {
+                            answersFrame.querySelector(`.answer.selected`).classList.remove('selected')
+                        }
+                        target.classList.add('selected')
+                        playerAnswer = (target.getAttribute('data-answer') == '0' ? true : false)
+                        submitBtn.classList.remove('disabled')
+                        console.log(playerAnswer);
+                    })
+                }
 
-            break;
-        case 'fillInBlanks':
+                break;
+            case 'fillInBlanks':
 
-            let activeBlank = 0
-            const bankEl = document.createElement('div')
-            bankEl.className = 'wordBank'
-            const bankLabel = document.createElement('div')
-            bankLabel.className = 'bankTitle'
-            const bankGroup = document.createElement('div')
-            bankGroup.className = 'bankGroup'
+                let activeBlank = 0
+                const bankEl = document.createElement('div')
+                bankEl.className = 'wordBank'
+                const bankLabel = document.createElement('div')
+                bankLabel.className = 'bankTitle'
+                const bankGroup = document.createElement('div')
+                bankGroup.className = 'bankGroup'
 
-            bankLabel.append(document.createTextNode('Word Bank'))
+                bankLabel.append(document.createTextNode('Word Bank'))
 
-            bankEl.append(bankLabel, bankGroup)
+                bankEl.append(bankLabel, bankGroup)
 
-            const upperCaseArray = []
-            question.answers.forEach(q => upperCaseArray.push(q.toUpperCase()))
+                const upperCaseArray = []
+                question.answers.forEach(q => upperCaseArray.push(q.toUpperCase()))
 
-            const paragraph = document.createElement('p')
-            paragraph.innerHTML = question.sentence.replaceAll('%%', `<div contenteditable class="blank" spellcheck="off"></div>`)
-            paragraph.className = 'blanksParagraph'
+                const paragraph = document.createElement('p')
+                paragraph.innerHTML = question.sentence.replaceAll('%%', `<div contenteditable class="blank" spellcheck="off"></div>`)
+                paragraph.className = 'blanksParagraph'
 
 
-            for (let i = 0; i < paragraph.querySelectorAll('.blank').length; i++) {
-                const element = paragraph.querySelectorAll('.blank')[i]
-                element.id = `blank${letters[i].toUpperCase()}`
-                element.addEventListener('focus', () => {
-                    activeBlank = letters.indexOf(element.id.replace('blank', ''))
+                for (let i = 0; i < paragraph.querySelectorAll('.blank').length; i++) {
+                    const element = paragraph.querySelectorAll('.blank')[i]
+                    element.id = `blank${letters[i].toUpperCase()}`
+                    element.addEventListener('focus', () => {
+                        activeBlank = letters.indexOf(element.id.replace('blank', ''))
 
-                    element.onkeyup = () => {
-                        element.textContent = element.textContent.toLowerCase()
-                        checkForBlanks()
-                        checkForUses()
-                    }
-                    element.onblur = () => {
-                        checkForUses()
-                        if (!element.textContent == '') {
-                            if (!upperCaseArray.includes(element.textContent.toUpperCase())) {
-                                const err = showError('Please use only words from the bank.')
+                        element.onkeyup = () => {
+                            element.textContent = element.textContent.toLowerCase()
+                            checkForBlanks()
+                            checkForUses()
+                        }
+                        element.onblur = () => {
+                            checkForUses()
+                            if (!element.textContent == '') {
+                                if (!upperCaseArray.includes(element.textContent.toUpperCase())) {
+                                    const err = showError('Please use only words from the bank.')
 
-                                answersFrame.append(err)
-                                element.textContent = ''
-                                activeBlank = i
+                                    answersFrame.append(err)
+                                    element.textContent = ''
+                                    activeBlank = i
 
-                                setTimeout(() => {
-                                    err.remove()
-                                }, 3000);
+                                    setTimeout(() => {
+                                        err.remove()
+                                    }, 3000);
+                                }
                             }
                         }
-                    }
-                })
-            }
+                    })
+                }
 
-            for (let i = 0; i < question.answers.length; i++) {
-                const answersSorted = question.answers.sort()
-                const answerText = answersSorted[i]
-                const answerEl = document.createElement('div')
-                answerEl.className = 'bankItem'
-                answerEl.append(document.createTextNode(answerText))
+                for (let i = 0; i < question.answers.length; i++) {
+                    const answersSorted = question.answers.sort()
+                    const answerText = answersSorted[i]
+                    const answerEl = document.createElement('div')
+                    answerEl.className = 'bankItem'
+                    answerEl.append(document.createTextNode(answerText))
 
-                bankGroup.append(answerEl)
+                    bankGroup.append(answerEl)
 
-                answerEl.addEventListener('click', () => {
-                    paragraph.querySelectorAll('.blank')[activeBlank].textContent = answerEl.textContent
+                    answerEl.addEventListener('click', () => {
+                        paragraph.querySelectorAll('.blank')[activeBlank].textContent = answerEl.textContent
 
-                    checkForUses()
+                        checkForUses()
 
-                    checkForBlanks()
+                        checkForBlanks()
 
-                    if (activeBlank !== (paragraph.querySelectorAll('.blank').length - 1)) activeBlank++
-                })
-            }
+                        if (activeBlank !== (paragraph.querySelectorAll('.blank').length - 1)) activeBlank++
+                    })
+                }
 
-            answersFrame.append(bankEl, paragraph)
+                answersFrame.append(bankEl, paragraph)
 
-            answersFrame.classList.add('fillInBlanks')
+                answersFrame.classList.add('fillInBlanks')
 
-            function checkForBlanks() {
-                let allBlanksFilled = undefined
+                function checkForBlanks() {
+                    let allBlanksFilled = undefined
 
-                paragraph.querySelectorAll('.blank').forEach(el => {
-                    allBlanksFilled = (el.textContent == '' ? false : true)
+                    paragraph.querySelectorAll('.blank').forEach(el => {
+                        allBlanksFilled = (el.textContent == '' ? false : true)
 
-                    if (allBlanksFilled == true) {
-                        submitBtn.classList.remove('disabled')
-                        const answer = []
+                        if (allBlanksFilled == true) {
+                            submitBtn.classList.remove('disabled')
+                            const answer = []
 
-                        paragraph.querySelectorAll('.blank').forEach(bx => {
-                            answer.push(bx.textContent)
-                        })
-                        playerAnswer = answer
+                            paragraph.querySelectorAll('.blank').forEach(bx => {
+                                answer.push(bx.textContent)
+                            })
+                            playerAnswer = answer
 
-                    } else {
-                        submitBtn.classList.add('disabled')
-                    }
-                })
-            }
-            function checkForUses() {
-                let sortedAnswers = question.answers.sort()
+                        } else {
+                            submitBtn.classList.add('disabled')
+                        }
+                    })
+                }
+                function checkForUses() {
+                    let sortedAnswers = question.answers.sort()
 
-                bankGroup.querySelectorAll('.bankItem').forEach(s => {
-                    if (s.classList.contains('used')) {
-                        s.classList.remove('used')
-                    }
-                })
+                    bankGroup.querySelectorAll('.bankItem').forEach(s => {
+                        if (s.classList.contains('used')) {
+                            s.classList.remove('used')
+                        }
+                    })
 
 
-                paragraph.querySelectorAll('.blank').forEach(el => {
-                    if (sortedAnswers.includes(el.textContent)) {
-                        bankGroup.querySelectorAll('.bankItem')[sortedAnswers.indexOf(el.textContent)].classList.add('used')
-                    }
-                })
-            }
+                    paragraph.querySelectorAll('.blank').forEach(el => {
+                        if (sortedAnswers.includes(el.textContent)) {
+                            bankGroup.querySelectorAll('.bankItem')[sortedAnswers.indexOf(el.textContent)].classList.add('used')
+                        }
+                    })
+                }
 
-            break;
-        default:
-            throw console.error('Invalid question type');
-            break;
+                break;
+            default:
+                throw console.error('Invalid question type');
+                break;
+        }
+
+        if (question.type !== 'fillInBlanks') {
+            if (answersFrame.classList.contains('fillInBlanks')) answersFrame.classList.remove('fillInBlanks')
+        }
+
+        submitBtn.addEventListener('click', () => checkAnswer(playerAnswer))
+    } else {
+        completeTest()
     }
-
-    if (question.type !== 'fillInBlanks') {
-        if (answersFrame.classList.contains('fillInBlanks')) answersFrame.classList.remove('fillInBlanks')
-    }
-
-    submitBtn.addEventListener('click', () => checkAnswer(playerAnswer))
 }
 function checkAnswer(answer) {
     const question = questions[currentQuestion]
@@ -356,12 +358,15 @@ function checkAnswer(answer) {
     if (currentQuestion == questions.length - 1) {
         continueBtn.innerHTML = 'Finish'
         continueBtn.onclick = () => {
-            completeTest()
+            localStorage.setItem('currentQuestion', currentQuestion + 1)
+            location.reload()
         }
     } else {
         continueBtn.onclick = () => {
             continueBtn.style.display = 'none'
-            showQuestion(currentQuestion + 1)
+            localStorage.setItem('currentQuestion', currentQuestion + 1)
+            location.reload()
+
         }
     }
 }
@@ -470,3 +475,10 @@ function completeTest() {
     }
 }
 // completeTest()
+
+if (localStorage.getItem('currentQuestion')) {
+    showQuestion(Number(localStorage.getItem('currentQuestion')))
+} else {
+    localStorage.setItem('currentQuestion', 0)
+    location.reload()
+}
