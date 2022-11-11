@@ -109,7 +109,7 @@ function showQuestion(questionNumber) {
                         answersFrame.querySelector(`.answer.selected`).classList.remove('selected')
                     }
                     target.classList.add('selected')
-                    playerAnswer = parseInt(target.getAttribute('data-answer'))
+                    playerAnswer = Number(target.getAttribute('data-answer'))
                     submitBtn.classList.remove('disabled')
                     console.log(playerAnswer);
                 })
@@ -269,6 +269,7 @@ function showQuestion(questionNumber) {
 function checkAnswer(answer) {
     const question = questions[currentQuestion]
     console.log(question);
+    console.log('answer = ' + answer);
     console.log('cq = ' + currentQuestion);
     const scoreText = document.querySelector("header .scoreText");
     const submitBtn = document.querySelector('.main-content .submitArea .submitBtn')
