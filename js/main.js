@@ -331,14 +331,15 @@ function checkAnswer(answer) {
                 correctBlanks++
                 if (allCorrect !== 'false') {
                     allCorrect = true
-                // }
-            } else {
-                blankEls[i].classList.add('incorrect')
-                /* const clone = blankEls[i].cloneNode()
-                allCorrect = false
-                clone.textContent = question.correct[i]
-                clone.classList.replace('incorrect', 'correct')
-                blankEls[i].parentNode.insertBefore(clone, blankEls[i].nextSibling) */
+
+                } else {
+                    blankEls[i].classList.add('incorrect')
+                    /* const clone = blankEls[i].cloneNode()
+                    allCorrect = false
+                    clone.textContent = question.correct[i]
+                    clone.classList.replace('incorrect', 'correct')
+                    blankEls[i].parentNode.insertBefore(clone, blankEls[i].nextSibling) */
+                }
             }
         }
 
@@ -363,6 +364,7 @@ function checkAnswer(answer) {
         }
     }
 }
+
 
 function showError(msg) {
     const errorMsg = document.createElement('div')
