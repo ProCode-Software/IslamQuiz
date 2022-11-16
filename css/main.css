@@ -566,6 +566,9 @@ body {
     margin-bottom: 5px;
 }
 
+.completion>.bottom {
+    height: 100%;
+}
 
 
 .completion .bottom>section {
@@ -826,6 +829,10 @@ body {
     .completion>.bottom {
         max-height: none;
         min-height: 300px;
+        height: 100%;
+    }
+    .completion .bottomControls {
+        position: static;
     }
 }
 
@@ -864,7 +871,7 @@ body {
 }
 
 .bottomControls {
-    display: flex;
+    display: grid;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -872,12 +879,24 @@ body {
     width: 100%;
     flex-wrap: wrap;
     padding-block: 10px;
+    grid-template-columns: repeat(2, 1fr);
+
+    position: fixed;
+        bottom: 0;
+        background: #fff;
+        padding-inline: 10px;
 }
 
 .bottomControls button {
     width: 100%;
     max-width: 300px;
     min-width: 100px;
+}
+.bottomControls button:first-child {
+    justify-self: end;
+}
+.bottomControls button:last-child {
+    justify-self: start;
 }
 
 button.btn {
@@ -902,4 +921,14 @@ button.btn:hover {
     box-shadow: 0 5px 6px rgba(78, 87, 107, 0.14);
     background: var(--background);
     color: #fff;
+}
+@media screen and (max-width: 400px) {
+    .completion .bottomControls {
+        grid-template-columns: none;
+        display: flex;
+    }
+    .completion .bottomControls button {
+        max-width: 90%;
+        transition: .3s;
+    }
 }
