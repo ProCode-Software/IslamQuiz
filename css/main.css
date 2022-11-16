@@ -823,6 +823,10 @@ body {
         justify-content: center;
         text-align: center;
     }
+    .completion>.bottom {
+        max-height: none;
+        min-height: 300px;
+    }
 }
 
 .statKey {
