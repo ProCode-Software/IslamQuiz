@@ -487,14 +487,14 @@ if (localStorage.getItem('currentQuestion')) {
 }
 function shareQuizScore(e) {
     const caller = e.target
-
+    
     if (caller) {
-        const message = 'I did this game'
+        const message = `I scored ${percent}% on the Allah vs. God quiz!\nPlay now: https://procode-software.github.io/IslamQuiz`
         const originalText = caller.textContent
 
         navigator.clipboard.writeText(message)
 
-        caller.textContent = 'Copied'
+        caller.textContent = 'Copied to clipboard'
         setTimeout(() => {
             caller.textContent = originalText
         }, 3000);
