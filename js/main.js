@@ -433,24 +433,27 @@ function completeTest() {
                                 <div class="qlBody qlOptions"></div>`
 
             let answers = question.type == 'trueFalse' ? ['True', 'False'] : question.answers
-            for (let j = 0; j < answers.length; j++) {
-                const option = answers[j]
-                const optionEl = document.createElement('div')
-                optionEl.className = 'qlOption'
-                optionEl.innerHTML = `
+
+
+
+            const optionEl = document.createElement('div')
+            optionEl.className = 'qlOption'
+            optionEl.innerHTML = `
                                         <div class="qlOptionLeft">
-                                            <div class="letter keyboardShortcut" data-key="${letters
-                    [j].toLowerCase()}">${letters
-                    [j].toUpperCase()}</div>
-                                            <div class="qlOptionText">${option}</div>
+                                            <div class="letter keyboardShortcut" data-key="${letters[question.type == 'trueFalse' ? (question.correct == true ? 0 : 1) : question.correct]}">${letters
+                [question.type == 'trueFalse' ? (question.correct == true ? 0 : 1) : question.correct].toUpperCase()}</div>
+                                            <div class="qlOptionText">${question.type == 'trueFalse' ? (question.correct == false ? 'True' : 'False') : (question.answers[question.correct])}</div>
                                         </div>
                                         <div class="qlOptionRight">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M21.5 6.62L9.73566 18.3843L3 11.6487" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+</svg>
                                         </div>`
-                mainElement.querySelector('.qlOptions').append(optionEl)
-                if (question.correct == j) {
-                    optionEl.classList.add('ql-correct')
-                }
-            }
+            mainElement.querySelector('.qlOptions').append(optionEl)
+
+            optionEl.classList.add('ql-correct')
+
+
         } else {
             mainElement.innerHTML = `<div class="qlHeader">
                                     <div class="number">${i + 1}</div>
@@ -481,4 +484,19 @@ if (localStorage.getItem('currentQuestion')) {
 } else {
     localStorage.setItem('currentQuestion', 0)
     location.reload()
+}
+function shareQuizScore(e) {
+    const caller = e.target
+
+    if (caller) {
+        const message = 'I did this game'
+        const originalText = caller.textContent
+
+        navigator.clipboard.writeText(message)
+
+        caller.textContent = 'Copied'
+        setTimeout(() => {
+            caller.textContent = originalText
+        }, 3000);
+    }
 }

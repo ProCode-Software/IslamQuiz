@@ -875,10 +875,11 @@ body {
     min-width: 100px;
 }
 
-button.primary {
-    background: var(--accent);
-    color: #fff;
-    border: none;
+button.btn {
+    --background: rgb(20, 24, 28);
+    background: none;
+    color: var(--background);
+    border: 3px solid var(--background);
     outline: none;
     font-size: 1.06em;
     border-radius: 10px;
@@ -891,8 +892,9 @@ button.primary {
     transition: .15s;
 }
 
-button.primary:hover {
+button.btn:hover {
     transition: .15s;
     box-shadow: 0 5px 6px rgba(78, 87, 107, 0.14);
-    background: #0848df;
+    background: var(--background);
+    color: #fff;
 }
