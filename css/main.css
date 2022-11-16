@@ -615,11 +615,12 @@ body {
 }
 
 .qlHeader {
-    display: flex;
+    display: grid;
     flex-direction: row;
     align-items: center;
     gap: 15px;
     width: 100%;
+    grid-template-columns: 35px auto;
 }
 
 .qlHeader .number {
