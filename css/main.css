@@ -339,6 +339,9 @@ input:focus {
     width: 70px;
     text-align: center;
     font-size: 1.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .headerToolbarWrapper {
@@ -992,5 +995,38 @@ header .toolbar {
 
 .headerTitleControls:hover {
     background: rgba(163, 184, 198, 0.05);
+    transition: .15s;
+}
+.headerTitleControls:active {
+    background: rgba(163, 184, 198, 0.108);
+    transition: .15s;
+}
+.headerTitleControls:active svg {
+    animation: dropdownbtnanim .5s ease-in-out;
+}
+@keyframes dropdownbtnanim {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+}
+.headerContextMenu {
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 250px;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(130, 137, 141, 0.1);
+    background: #fff;
+    min-width: 150px;
     transition: .15s;
 }
