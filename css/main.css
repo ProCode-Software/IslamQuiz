@@ -36,7 +36,7 @@ header>div {
     width: 100%;
 }
 
-.headerTitle {
+.headerTitle .headerTitleControls {
     text-align: center;
     font-size: 1.15em;
     font-weight: 600;
@@ -989,7 +989,8 @@ header .toolbar {
     align-items: center;
     flex-direction: row;
     gap: 10px;
-    border-radius: 8px;padding: 10px;
+    border-radius: 8px;
+    padding: 10px;
     cursor: pointer;
 }
 
@@ -997,25 +998,31 @@ header .toolbar {
     background: rgba(163, 184, 198, 0.05);
     transition: .15s;
 }
+
 .headerTitleControls:active {
     background: rgba(163, 184, 198, 0.108);
     transition: .15s;
 }
+
 .headerTitleControls:active svg {
     animation: dropdownbtnanim .5s ease-in-out;
 }
+
 @keyframes dropdownbtnanim {
     0% {
         transform: translateY(0);
     }
+
     100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(5px);
     }
 }
-.headerContextMenu {
+
+.contextMenu {
     position: absolute;
     top: 120%;
     left: 50%;
@@ -1029,4 +1036,83 @@ header .toolbar {
     background: #fff;
     min-width: 150px;
     transition: .15s;
+    transform-origin: top center;
+    animation: context-menu .3s;
+    z-index: 99;
+}
+
+@keyframes context-menu {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(.1) translateX(-50%);
+    }
+}
+
+.contextMenu ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+}
+
+.contextMenu li {
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    transition: .15s;
+    width: 100%;
+    border-radius: 7px;
+}
+
+.contextMenu .contextItem:not(.detail):hover {
+    background: rgba(163, 184, 198, 0.05);
+    transition: .15s;
+}
+
+.contextItem.detail {
+    border-radius: 0px;
+    padding: 3px;
+    gap: 15px;
+    transition: .3s;
+}
+
+.contextItem.detail:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    transition: .3s;
+}
+
+.contextItem.detail .detailTitle {
+    font-size: 1.15em;
+    font-weight: 600;
+}
+
+.contextItem.detail .detailSubtext {
+    font-size: 1.02em;
+    color: #6e7a87;
+}
+
+.detail .detailMain {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+}
+
+.detail .img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: rgba(163, 184, 198, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #778797;
+    aspect-ratio: 1.1;
 }
