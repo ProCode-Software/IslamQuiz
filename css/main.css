@@ -826,11 +826,13 @@ body {
         justify-content: center;
         text-align: center;
     }
+
     .completion>.bottom {
         max-height: none;
         min-height: 300px;
         height: 100%;
     }
+
     .completion .bottomControls {
         position: static;
     }
@@ -882,9 +884,9 @@ body {
     grid-template-columns: repeat(2, 1fr);
 
     position: fixed;
-        bottom: 0;
-        background: #fff;
-        padding-inline: 10px;
+    bottom: 0;
+    background: #fff;
+    padding-inline: 10px;
 }
 
 .bottomControls button {
@@ -892,9 +894,11 @@ body {
     max-width: 300px;
     min-width: 100px;
 }
+
 .bottomControls button:first-child {
     justify-self: end;
 }
+
 .bottomControls button:last-child {
     justify-self: start;
 }
@@ -922,13 +926,71 @@ button.btn:hover {
     background: var(--background);
     color: #fff;
 }
+
 @media screen and (max-width: 400px) {
     .completion .bottomControls {
         grid-template-columns: none;
         display: flex;
     }
+
     .completion .bottomControls button {
         max-width: 90%;
         transition: .3s;
     }
+}
+
+header .toolbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.toolbar .toolbarItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 7px;
+    padding: 8px;
+    border: none;
+    outline: none;
+    background: none;
+    transition: box-shadow .15s, background .15s;
+}
+
+.toolbarItem:hover {
+    background: rgba(163, 184, 198, 0.05);
+    transition: box-shadow .15s, background .15s;
+}
+
+.toolbarItem:active {
+    background: rgba(163, 184, 198, 0.108);
+    transition: box-shadow .15s, background .15s;
+}
+
+.toolbarItem svg {
+    display: flex;
+}
+
+.headerTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: .15s;
+}
+
+.headerTitleControls {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    border-radius: 8px;padding: 10px;
+    cursor: pointer;
+}
+
+.headerTitleControls:hover {
+    background: rgba(163, 184, 198, 0.05);
+    transition: .15s;
 }
