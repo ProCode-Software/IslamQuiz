@@ -530,6 +530,34 @@ function showSettings(item) { }
  * @param {string} icon SVG icon
  * @param {Element} menu Context menu element to append the item into
  */
-function creatContextItem(name, id, icon, menu) {
+function creatContextItem(name, id, icon, menu, style) {
+    const element = document.createElement('li')
+    element.className = 'contextItem'
+    element.id = id ? id : name.toLowerCase()
+    element.innerHTML = `${icon}<span class="contextItemLabel">${name}</span>`
+    menu.append(element)
 
+    if (style) element.classList.add(`cm-${style}`)
 }
+const headerControlCtx = document.querySelector('.headerContextMenu ul')
+creatContextItem('Settings', 'settings', iconReferences.settingsLight, headerControlCtx)
+creatContextItem('How to play', 'help', iconReferences.helpLight, headerControlCtx)
+creatContextItem('Clear progress', 'clearProgress', iconReferences.trashLight, headerControlCtx, 'dangerous')
+
+
+const headerTitleControls = document.querySelector('.headerTitleControls')
+
+headerTitleControls.addEventListener('click', () => {
+    const blurArea = document.createElement('div')
+    blurArea.className = 'blurArea'
+    document.body.append(blurArea)
+    const contextMenu = document.querySelector('header .headerContextMenu')
+
+    contextMenu.style.display = 'flex'
+
+    blurArea.addEventListener('click', () => {
+        blurArea.remove()
+        contextMenu.style.display = 'none'
+    })
+    window.onblur = () => blurArea.click()
+})

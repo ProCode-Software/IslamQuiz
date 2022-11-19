@@ -13,6 +13,7 @@ body {
     --accent: #054cf3;
     --color-correct: #00d7a1;
     --color-incorrect: #f8065f;
+    --color-red-dark: #e70055;
 }
 
 .container {
@@ -1031,14 +1032,17 @@ header .toolbar {
     max-width: 250px;
     border: 1px solid var(--border-color);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0 10px 40px rgba(130, 137, 141, 0.1);
     background: #fff;
-    min-width: 150px;
+    min-width: 200px;
     transition: .15s;
     transform-origin: top center;
     animation: context-menu .3s;
     z-index: 99;
+
+
+    display: none;
 }
 
 @keyframes context-menu {
@@ -1054,13 +1058,13 @@ header .toolbar {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 5px;
     width: 100%;
     margin: 0;
 }
 
 .contextMenu li {
-    padding: 10px 15px;
+    padding: 9px 14px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1068,6 +1072,19 @@ header .toolbar {
     transition: .15s;
     width: 100%;
     border-radius: 7px;
+}
+
+.contextMenu .contextItem:not(.detail) svg {
+    display: flex;
+    width: 21px;
+    height: 21px;
+    color: inherit;
+}
+.contextMenu .contextItem:not(.detail).cm-dangerous {
+    color: var(--color-red-dark);
+}
+.contextMenu .contextItem:not(.detail).cm-dangerous:hover {
+    background: #fff7f9;
 }
 
 .contextMenu .contextItem:not(.detail):hover {
@@ -1080,6 +1097,7 @@ header .toolbar {
     padding: 3px;
     gap: 15px;
     transition: .3s;
+    margin-bottom: 5px;
 }
 
 .contextItem.detail:not(:last-child) {
@@ -1115,4 +1133,11 @@ header .toolbar {
     justify-content: center;
     color: #778797;
     aspect-ratio: 1.1;
+}
+.blurArea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
